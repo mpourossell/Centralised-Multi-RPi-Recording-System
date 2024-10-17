@@ -1,0 +1,49 @@
+#### Functions for the parent RPi
+
+@reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_enable.py
+
+@reboot /usr/bin/python3 /home/pi/Scripts/relay_scheduler.py # relay_scheduler
+
+@reboot /usr/bin/python3 /home/pi/Scripts/webserver/flaskapi.py # local_server
+
+@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/run_ngrok.py >> run_ngrok.log 2>&1 # ngrok_server
+
+* * * * * /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOON
+
+* * * * * /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOOFF
+
+
+#### Functions to run at boot
+
+@reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_scheduler.py # wakeup_scheduler
+
+@reboot /usr/bin/python3 /home/pi/Scripts/record_update.py # record_update
+
+@reboot /usr/bin/python3 /home/pi/Scripts/shutdown_scheduler.py # shutdown_scheduler
+
+@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/send_status_request.py # send_status_request
+
+
+
+
+#### Functions that are updated in an automated way using the scripts from above
+
+* * * * * /usr/bin/python3 -c 'import pirecorder; R=pirecorder.PiRecorder("morning.conf"); R.record()' >> /home/pi/pirecorder/logs/$(date +\%y\%m\%d)_morning.log 2>&1 # REC_morning
+
+* * * * * /usr/bin/python3 -c 'import pirecorder; R=pirecorder.PiRecorder("day.conf"); R.record()' >> /home/pi/pirecorder/logs/$(date +\%y\%m\%d)_day.log 2>&1 # REC_day
+
+* * * * * /usr/bin/python3 -c 'import pirecorder; R=pirecorder.PiRecorder("evening.conf"); R.record()' >> /home/pi/pirecorder/logs/$(date +\%y\%m\%d)_evening.log 2>&1 # REC_evening
+
+* * * * * sleep 360 && sudo shutdown -h now # Shutdown
+
+
+
+#### Constant functions
+
+* * * * * /usr/bin/python3 /home/pi/Scripts/tempsensor.py # tempsensor
+
+30 8 * * * /usr/bin/python3 /home/pi/Scripts/malfunction_notification.py # malfunction_notification
+
+0 17 * * * /usr/bin/python3 /home/pi/Scripts/ffmpeg_imgtovid.py >> cron.log 2>&1 # ffmpeg_imgtovid
+
+0 12 * * * /usr/bin/python3 /home/pi/Scripts/backup_vid.py >> cron.log 2>&1 # backup_vid
