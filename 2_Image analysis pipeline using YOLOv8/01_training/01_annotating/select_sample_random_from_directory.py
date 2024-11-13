@@ -28,8 +28,8 @@ def copy_random_images(source_dir, destination_dir, num_images):
             print(f"Image already exists: {destination_path}.")
 
 if __name__ == '__main__':
-    source_directory = r'C:\Users\mpou\Documents\Random_frames_selection'
-    destination_directory = r"C:\Users\mpou\OneDrive - CREAF\Documentos\2nd Chapter_Computer vision\03_image_data\annotated\Pose estimation\2000_sample"
+    source_directory = "random_frames_directory_path"
+    destination_directory = "out_durectory_path"
     num_images_to_copy = 200
 
     copy_random_images(source_directory, destination_directory, num_images_to_copy)

@@ -1,3 +1,5 @@
+# Convert CVAT annotations to the correct YOLOv8 format for training a custom pose estimation model
+
 import xml.etree.ElementTree as ET
 import os
 
