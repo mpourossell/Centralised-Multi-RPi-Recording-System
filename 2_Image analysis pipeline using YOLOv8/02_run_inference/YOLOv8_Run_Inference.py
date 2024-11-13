@@ -1,3 +1,8 @@
+# This script runs inference in all videos from specified directory
+# It takes the list of timestamps to relate each frame with the recording timestamp.
+# It extracts information from detection and the frame itself and creates a CSV file (save_csv=True)
+# It can also export infered videos using the argument save_video=True
+
 import cv2
 import torch
 import pandas as pd
@@ -347,10 +352,10 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
 
 if __name__ == "__main__":
     # Define paths
-    weights_path = r"E:\2024\yolov8m-pose_custom.pt"
-    video_folder = r"E:\2024\videos_ALL"
-    timestamp_folder = r"E:\2024\lists_ALL"
-    output_directory = r"E:\2024\YOLO_output"
+    weights_path = "yolov8_custom_pose.pt" # Custom pose estimation model, previously trained
+    video_folder = "videos_directory"
+    timestamp_folder = "list_timestamps_directory"
+    output_directory = "output_directory"
 
 
     run_yolo_inference(weights_path, video_folder, timestamp_folder, output_directory, save_video=True, save_csv=True)

@@ -13,13 +13,11 @@
 * * * * * /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOOFF
 
 
-#### Function for only the children:
-
-@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/send_status_request.py # send_status_request
-
 
 #### Functions for all units:
 ## Functions to run at boot
+
+@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/send_status_request.py # send_status_request
 
 @reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_scheduler.py # wakeup_scheduler
 
