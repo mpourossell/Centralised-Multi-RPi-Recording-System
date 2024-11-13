@@ -1,4 +1,7 @@
-import glob 
+# This script sends the last recorded picture to your e-mail. It's used to manually check that the camera
+# is well positioned and the recording is doing well.
+
+import glob
 import os
 import yagmail
 import socket
@@ -8,7 +11,6 @@ list_of_recs = glob.glob("/home/pi/pirecorder/recordings/*") # * means all if ne
 latest_rec = max(list_of_recs, key=os.path.getmtime) 
 print("Latest_rec is " + latest_rec) 
 latest_pic = max(glob.glob(latest_rec + "/*.jpg"), key=os.path.getmtime)
-#shutil.copytree(latest_rec, #"/home/pi/mnt/Drive/Marçal's PhD/LogJackdaw/PiRecorder pictures")
 # start a connection with GMAIL
 FROM = config.gmail_address
 password = config.gmail_password

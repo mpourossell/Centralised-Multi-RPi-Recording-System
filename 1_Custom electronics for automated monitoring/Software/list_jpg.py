@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+# This script creates a list of all filenames of the recorded images in each sequence. This is useful to keep
+# the timestamps of each frame, as when later converted to a video filenames of each frames are lost.
 
 import os
 

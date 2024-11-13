@@ -1,3 +1,5 @@
+# This script is used to define key initial configurations
+
 import socket
 
 # Set timezone where the system is installed

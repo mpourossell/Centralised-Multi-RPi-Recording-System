@@ -1,3 +1,6 @@
+# This script creates a flask application to share key RPi status metrics to a local web server
+# It should be run in the parent computer, as it will be constantly hearing for child requests.
+
 from flask import Flask, render_template, request
 import sqlite3
 from datetime import datetime

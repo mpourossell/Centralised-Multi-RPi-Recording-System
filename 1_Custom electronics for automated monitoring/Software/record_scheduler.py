@@ -1,16 +1,23 @@
+# This script updates the recording schedules according to daylight (if multiple types of recordings are needed acrosst the day).
+# For example, morning and evening might have lower light conditions. Then, for these periods higher
+# exposure recording might be preferred than the automatic exposure used to record during the day.
+
+# If some units are having higher exposure during the evening (because of the direction of the camera),
+# they can be set to perform different than the others.
+
+import config
 import pirecorder
 from astral.sun import sun
 from astral import LocationInfo
-from datetime import date, timedelta
+from datetime import date, time, timezone, timedelta
 import datetime
 import socket
 import pytz
-import config
 
 
 def get_sunrise_sunset(lat, long, date_=None):
     location = LocationInfo(lat, long)
-    local_timezone = pytz.timezone(config.timezone)
+    tz_lleida = pytz.timezone('Europe/Madrid')
 
     # If no date is provided, use today's date
     if date_ is None:
@@ -21,8 +28,8 @@ def get_sunrise_sunset(lat, long, date_=None):
 
     # Return the local time of sunrise, sunset, and twilight
     return (
-        s['sunrise'].astimezone(local_timezone),
-        s['sunset'].astimezone(local_timezone)
+        s['sunrise'].astimezone(tz_lleida),
+        s['sunset'].astimezone(tz_lleida)
     )
 
 
@@ -87,9 +94,12 @@ def update_pirecorder(time_now, sunrise, sunset, extra_min, evening_delay, sunny
     rec_evening_timeplan = f"{evening_from.minute} {evening_from.hour} * * *"
     rec_evening.schedule(timeplan=rec_evening_timeplan, jobname="evening")
 
-    print(f"rec_morning will record from {morning_from.strftime('%X')} to {morning_to.strftime('%X')} for {rec_morning_duration} seconds.")
-    print(f"rec_day will record from {day_from.strftime('%X')} to {day_to.strftime('%X')} for {rec_day_duration} seconds.")
-    print(f"rec_evening will record from {evening_from.strftime('%X')} to {evening_to.strftime('%X')} for {rec_evening_duration} seconds.")
+    print(
+        f"rec_morning will record from {morning_from.strftime('%X')} to {morning_to.strftime('%X')} for {rec_morning_duration} seconds.")
+    print(
+        f"rec_day will record from {day_from.strftime('%X')} to {day_to.strftime('%X')} for {rec_day_duration} seconds.")
+    print(
+        f"rec_evening will record from {evening_from.strftime('%X')} to {evening_to.strftime('%X')} for {rec_evening_duration} seconds.")
 
 
 ##### GET SUNRISE AND SUNSET TIMES IN LLEIDA FOR TODAY
@@ -105,12 +115,13 @@ print(f'Sunrise = {sunrise}, Sunset = {sunset}')
 ##### UPDATE PIRECORDER CONFIGFILES AND RECORDING SCHEDULES BASED ON SUNLIGHT
 
 dt = datetime.datetime.now()
-local_timezone = pytz.timezone(config.timezone)
-time_now = local_timezone.localize(dt)
+madrid_tz = pytz.timezone('Europe/Madrid')
+time_now = madrid_tz.localize(dt)
 print(f'Time_now = {time_now}')
 extra_min = 30
 evening_delay = 30
-sunny_evening_list = ["jackdaw04", "jackdaw06", "jackdaw08", "jackdaw10", "jackdaw11"]  # List of nest boxes with direct sunlight in the box at evening
+sunny_evening_list = ["jackdaw04", "jackdaw06", "jackdaw08", "jackdaw10",
+                      "jackdaw11"]  # List of nest boxes with direct sunlight in the box at evening
 
 # Run function
 update_pirecorder(time_now, sunrise, sunset, extra_min, evening_delay, sunny_evening_list)

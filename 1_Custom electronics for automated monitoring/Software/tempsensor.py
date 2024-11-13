@@ -1,3 +1,6 @@
+# This script reads temperature using the temperature sensor and stores it in a log file.
+# It can be run using cron at desired schedules
+
 import logging
 import socket
 import os

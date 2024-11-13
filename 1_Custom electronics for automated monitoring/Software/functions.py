@@ -1,3 +1,5 @@
+# Some functions that may be used in other scripts
+
 import os
 from datetime import datetime, timedelta
 

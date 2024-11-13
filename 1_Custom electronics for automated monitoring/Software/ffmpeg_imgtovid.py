@@ -1,3 +1,6 @@
+# This script converts image sequences to video using ffmpeg. It compresses the video.
+# It also logs debugger for error control.
+
 import socket
 import logging
 import glob

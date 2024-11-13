@@ -1,4 +1,4 @@
-#### Functions for the parent RPi
+#### Functions for only the parent RPi:
 
 @reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_enable.py
 
@@ -13,7 +13,13 @@
 * * * * * /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOOFF
 
 
-#### Functions to run at boot
+#### Function for only the children:
+
+@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/send_status_request.py # send_status_request
+
+
+#### Functions for all units:
+## Functions to run at boot
 
 @reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_scheduler.py # wakeup_scheduler
 
@@ -21,12 +27,8 @@
 
 @reboot /usr/bin/python3 /home/pi/Scripts/shutdown_scheduler.py # shutdown_scheduler
 
-@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/send_status_request.py # send_status_request
 
-
-
-
-#### Functions that are updated in an automated way using the scripts from above
+## Functions that are updated in an automated way using the scripts from above
 
 * * * * * /usr/bin/python3 -c 'import pirecorder; R=pirecorder.PiRecorder("morning.conf"); R.record()' >> /home/pi/pirecorder/logs/$(date +\%y\%m\%d)_morning.log 2>&1 # REC_morning
 
@@ -38,7 +40,7 @@
 
 
 
-#### Constant functions
+## Constant functions
 
 * * * * * /usr/bin/python3 /home/pi/Scripts/tempsensor.py # tempsensor
 

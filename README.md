@@ -1,9 +1,14 @@
-# Automated monitoring of Parental Care in birds using Raspberry Pi and YOLOv8 computer vision
+# A centralized multi-unit recording system for automated, off-grid environmental monitoring and animal surveillance
 
-Parental care is a critical focus of study in behavioural ecology due to its influence on offspring fitness and evolutionary outcomes. However, gathering the detailed long-term data required to fully understand these relationships poses significant challenges, especially in wild populations. 
+Behavioural and ecological research on wild populations largely relies on continuous and simultaneous observations of many individual sites for long periods. However, efficiently collecting, storing and extracting such data in a non-invasive way poses significant logistical challenges, especially in remote, hard-to-access areas.
+Here, we present a flexible, multiple-unit video monitoring system based on Raspberry Pi micro-computers, which autonomously manages data collection, synchronization and storage across multiple child units under the coordination of a parent device. This setup is powered by solar energy, operating efficiently in off-grid environments, and supports remote connectivity and automated data backup. Designed to accommodate various sensor types and configurations, the system provides a robust, scalable solution adaptable to diverse field and laboratory research needs. The combination of open electronics with computer vision and deep learning techniques enables continuous and non-intrusive monitoring of animals in unprecedented detail.
 
-To overcome this, we developed an automated system for continuous non-invasive monitoring of parental care behaviours over extended periods. Using a Raspberry Pi-based system, we recorded video and temperature data in nest boxes throughout the entire reproductive cycle of 14 pairs of wild jackdaws (Corvus monedula) over three consecutive breeding seasons. 
+<p align="left">
+  <img src="images/Multiple_unit_simple.jpg" alt="Project structure" width="603" />
+</p>
 
+As a proof of concept, we describe the implementation of a multiple-unit system to monitor parental care behaviour in social, monogamous bird throughout the entire reproductive cycle. The system collected continuous data on parental effort and coordination of individuals over a four-month period, in addition to episodic data on nesting activities, predation events and interactions with conspecifics.
+We provide full design guides for setting up electronics and include open-source code for customizing the system operation.
 <p align="left">
   <img src="images/outdoor_picture.jpg" alt="Artificial breeding tower" width="603" />
 </p>
@@ -13,7 +18,7 @@ To overcome this, we developed an automated system for continuous non-invasive m
   <img src="images/incubation.gif" alt="Incubation of a jackdaw female" width="300" />
 </p>
 
-Additionally, our approach integrates open-source hardware with deep learning techniques for automated video analysis. Using a custom-trained YOLOv8 computer vision model, which demonstrated high accuracy, we successfully quantified detailed behavioural patterns across all collected data.
+Open-source design and code, complemented by computer vision and deep learning guidelines for deriving custom inferences from large video datasets, make the proposed monitoring system accessible, cheap and versatile for addressing a wide range of ecological problems.
 
 <p align="left">
   <img src="images/jackdaw_pose_detection.png" alt="Pose estimation in multiple individuals using YOLOv8" width="603" />
@@ -23,7 +28,6 @@ We provide a low-cost, scalable solution for automated continuous behavioural mo
 
 ## Project structure
 
-This project is divided in 3 main parts:
+This project is divided in 2 main parts:
 1) Design of an automated recording system based on Raspberry Pi microcomputers, to continuously monitoring nest boxes in the wild for long time periods
 1) Application of a custom computer vision model for automated video analysis in Python
-1) Data processing and analysis in R to quantify parental behaviour using the long-term and continuous collected data. This approach provides an accessible, cost-effective alternative to existing methods, while offering significant flexibility, enabling customization for a wide range of behavioural quantification applications beyond avian species or parental care. In this paper, we provide a detailed guide for replicating the system, including a materials list, instructions for assembling the electronics, and relevant coding procedures. We tested this system on wild jackdaws in the NE of the Iberian Peninsula to demonstrate its effectiveness in automating both data collection and post-processing for the interpretation of parental care behaviours. 

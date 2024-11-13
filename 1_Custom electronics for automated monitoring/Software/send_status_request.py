@@ -1,3 +1,6 @@
+# This script is used by the child units to request sending their status to the parent's Flask api.
+# It will send information to the parent unit, so it can publish it in the web server.
+
 import requests
 import subprocess
 import psutil

@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+# This script publishes the local web server created with the Flask api to the internet using ngrok.
+# Create an account and read doccumentation to create a web domain using ngrok.
+# It should be run in the parent unit, also running the flaskapi.py
 
 import subprocess
 import datetime

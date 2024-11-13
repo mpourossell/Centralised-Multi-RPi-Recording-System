@@ -1,4 +1,4 @@
-#!/bin/python
+# This script is used to schedule the shutdown based on daylight.
 
 from astral.sun import sun
 from astral import LocationInfo

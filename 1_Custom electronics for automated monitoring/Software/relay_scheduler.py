@@ -1,3 +1,6 @@
+# This script updates the relay activation schedules according to daylight
+
+
 from astral.sun import sun
 from astral import LocationInfo
 from datetime import timedelta

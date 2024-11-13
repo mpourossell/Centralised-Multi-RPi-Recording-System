@@ -1,3 +1,6 @@
+# This script cuts the current of the GPIO pins listed. It's used to cut the current to the relay channels
+# and power off the child units. It should be run only in the parent unit, and can be run using cron.
+
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)

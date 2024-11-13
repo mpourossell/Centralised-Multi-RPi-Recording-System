@@ -1,3 +1,7 @@
+# This script checks for errors in the system and notifies via gmail when detected. It can be
+# customized as needed, adding functions to check other components of the system.
+# It can be scheduled using cron.
+
 import cv2
 import glob
 import os

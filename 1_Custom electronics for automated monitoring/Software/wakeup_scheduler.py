@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# This script updates the wake-up alarm of the PiJuice based on daylight.
+# It should be run only in the parent unit.
 
 from pijuice import PiJuice
 from astral.sun import sun

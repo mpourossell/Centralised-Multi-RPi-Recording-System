@@ -1,3 +1,6 @@
+# This script uploads the videos in '/homem/pi/Videos' to the Google Drive as a backup
+# It can be run in cron in a daily basis to automate the backup
+
 import glob
 import os.path
 import shutil

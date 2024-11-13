@@ -1,3 +1,6 @@
+# This script activates the relay channels using the GPIO pins to power the child units.
+# It should be run only in the parent unit, and can be scheduled using cron.
+
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
