@@ -34,7 +34,7 @@ longitude = config.longitude
 
 # Get sunrise and suset times
 sunrise, sunset = get_sunrise_sunset(latitude, longitude)
-wakeup_time = sunrise - timedelta(hours=2)
+wakeup_time = sunrise - timedelta(hours=config.extra_hours)
 print(f'sunrise = {sunrise}. wakeup_time = {wakeup_time}')
 
 pijuice.rtcAlarm.SetAlarm({'second': 0, 'minute': wakeup_time.minute, 'hour': wakeup_time.hour, 'day': 'EVERY_DAY'})

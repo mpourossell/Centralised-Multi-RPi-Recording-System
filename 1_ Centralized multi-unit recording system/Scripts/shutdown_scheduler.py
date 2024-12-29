@@ -34,9 +34,9 @@ longitude = config.longitude
 # Get sunrise and suset times
 sunrise, sunset = get_sunrise_sunset(latitude, longitude)
 if socket.gethostname() == config.parent_hostname:
-    shutdown_time = sunset + timedelta(minutes=115) # Shutdown time delayed in the parent RPi
+    shutdown_time = sunset + timedelta(hours=config.extra_hours) + timedelta(minutes=config.extra_minutes) # Shutdown time delayed in the parent RPi
 else:
-    shutdown_time = sunset + timedelta(minutes=110)
+    shutdown_time = sunset + timedelta(hours=config.extra_hours)
 print(f'sunset = {sunset}. shutdown_time = {shutdown_time}')
 command_shut = "sleep 360 && sudo shutdown -h now"
 # Get the user's crontab

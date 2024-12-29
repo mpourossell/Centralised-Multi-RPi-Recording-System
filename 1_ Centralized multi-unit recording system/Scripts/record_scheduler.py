@@ -37,31 +37,31 @@ def get_sunrise_sunset(lat, long, date_=None):
 def update_pirecorder(time_now, sunrise, sunset, extra_min, evening_delay, sunny_evening_list):
     # Set recording time to morning recording
     # Edit morning recording in case RPi woke up after scheduled wakeup time:
-    wakeup_datetime = sunrise - timedelta(minutes=90)
+    wakeup_datetime = sunrise - timedelta(hours=config.extra_hours)
     if (wakeup_datetime < time_now < (sunrise - timedelta(minutes=extra_min))):
-        wakeup_datetime = time_now  # Set wakeup time to current time, give 1 minures or margin to start the recording
+        wakeup_datetime = time_now  # Set wakeup time to current time, give 1 minute of margin to start the recording
         print(f'Woke up later than expected: wakeup_datetime = time_now')
     else:
         print(f'Wake up time as expected: Wakeup_datetime = sunrise - 90min')
 
-    morning_from = wakeup_datetime + timedelta(minutes=2)
+    morning_from = wakeup_datetime + timedelta(minutes=1)
     morning_to = sunrise + timedelta(minutes=extra_min)  # Extra minutes to record after sunrise
     rec_morning_duration = int((morning_to - morning_from).total_seconds())
     rec_morning = pirecorder.PiRecorder(configfile="morning.conf")
     rec_morning.settings(imgnr=rec_morning_duration, imgtime=rec_morning_duration)
 
     # Set recording time to daylight recording
-    # Edit day recording in case RPi woke up in mid day:
+    # Edit day recording in case RPi woke up in mid-day:
     print(f'sunrise {sunrise}')
     print(f'time_now {time_now}')
     print(f'sunset {sunset}')
     if sunrise < time_now < sunset:
         day_from = time_now + timedelta(
-            minutes=1)  # Set to current time, give 2 minures or margin to start the recording
+            minutes=1)  # Set to current time, give 1 minute of margin to start the recording
         print(f'Sunrise = {sunrise}. Day_from = {day_from}. Time_now = {time_now}')
         print(f'Woke up in mid-day: Sunrise = time_now')
     else:
-        day_from = morning_to + timedelta(minutes=1)  # give 1 minute between recordin
+        day_from = morning_to + timedelta(minutes=1)  # give 1 minute between recording
 
     for Hostname in sunny_evening_list:
         if socket.gethostname() == Hostname:
@@ -78,9 +78,9 @@ def update_pirecorder(time_now, sunrise, sunset, extra_min, evening_delay, sunny
         evening_from = time_now + timedelta(
             minutes=1)  # Set to current time, give 1 minures or margin to start the recording
     else:
-        evening_from = day_to + timedelta(minutes=3)  # give 2 minutes between recordings
+        evening_from = day_to + timedelta(minutes=2)  # give 2 minutes between recordings
 
-    evening_to = sunset + timedelta(minutes=90)
+    evening_to = sunset + timedelta(hours=config.extra_hours)
 
     rec_evening_duration = int((evening_to - evening_from).total_seconds())
     rec_evening = pirecorder.PiRecorder(configfile="evening.conf")
@@ -102,24 +102,22 @@ def update_pirecorder(time_now, sunrise, sunset, extra_min, evening_delay, sunny
         f"rec_evening will record from {evening_from.strftime('%X')} to {evening_to.strftime('%X')} for {rec_evening_duration} seconds.")
 
 
-##### GET SUNRISE AND SUNSET TIMES IN LLEIDA FOR TODAY
-# Get today's date and location of Lleida
+##### GET SUNRISE AND SUNSET TIMES IN THE LOCATION FOR TODAY
+# Get today's date
 today_date = date.today()
-latitude = config.latitude
-longitude = config.longitude
 
 # Get sunrise and suset times
-sunrise, sunset = get_sunrise_sunset(latitude, longitude)
+sunrise, sunset = get_sunrise_sunset(config.latitude, config.longitude)
 print(f'Sunrise = {sunrise}, Sunset = {sunset}')
 
 ##### UPDATE PIRECORDER CONFIGFILES AND RECORDING SCHEDULES BASED ON SUNLIGHT
 
 dt = datetime.datetime.now()
-madrid_tz = pytz.timezone('Europe/Madrid')
+madrid_tz = pytz.timezone(config.timezone)
 time_now = madrid_tz.localize(dt)
 print(f'Time_now = {time_now}')
-extra_min = 30
-evening_delay = 30
+extra_min = 30 # Low light conditions in the morning last for 30 extra minutes after sunrise
+evening_delay = 30 # Low light conditions in the evening last for 30 extra minutes before sunset
 sunny_evening_list = ["jackdaw04", "jackdaw06", "jackdaw08", "jackdaw10",
                       "jackdaw11"]  # List of nest boxes with direct sunlight in the box at evening
 

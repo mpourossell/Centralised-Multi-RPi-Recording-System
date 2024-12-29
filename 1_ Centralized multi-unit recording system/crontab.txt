@@ -2,24 +2,25 @@
 
 @reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_enable.py
 
-@reboot /usr/bin/python3 /home/pi/Scripts/relay_scheduler.py # relay_scheduler
+@reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_scheduler.py # wakeup_scheduler
+
+@reboot /usr/bin/python3 /home/pi/Scripts/GPIOOFF_scheduler.py # GPIOOFF_scheduler
 
 @reboot /usr/bin/python3 /home/pi/Scripts/webserver/flaskapi.py # local_server
 
 @reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/run_ngrok.py >> run_ngrok.log 2>&1 # ngrok_server
 
-* * * * * /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOON
+@reboot /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOON
 
-* * * * * /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOOFF
+* * * * * /usr/bin/python3 /home/pi/Scripts/GPIOOFF.py # GPIOOFF
 
+*/5 * * * * /usr/bin/python3 /home/pi/Scripts/PiJuice_battery_level.py
 
 
 #### Functions for all units:
 ## Functions to run at boot
 
 @reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/send_status_request.py # send_status_request
-
-@reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_scheduler.py # wakeup_scheduler
 
 @reboot /usr/bin/python3 /home/pi/Scripts/record_update.py # record_update
 

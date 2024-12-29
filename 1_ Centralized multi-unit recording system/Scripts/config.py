@@ -9,6 +9,11 @@ timezone = 'Europe/Madrid'
 latitude = 41.617592
 longitude = 0.620015
 
+# Set system working schedules
+## Time to wake-up before sunrise (in hours)
+extra_hours = 2
+extra_minutes = 10
+
 # Email address for notification
 gmail_address = 'your@gmail.com'
 gmail_password = 'yourpassword'
@@ -26,5 +31,5 @@ web_login_password = 'yourpassword'
 # Unique domain generated with Ngrok, where the data will be uploaded to the internet
 web_server_domain = 'yourdomain'
 
-# If using multiple units, set the "parent" computer hostname
+# If using multiple units, set the "parent" computer hostname. We recommend to use names in sequence such as "rpi00" for the parent, "rpi01", "rpi02"... for the child units.
 parent_hostname = 'hostname'

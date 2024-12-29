@@ -103,5 +103,5 @@ if __name__ == "__main__":
     for _ in range(29):
         send_info()
 
-        # Wait for 5 seconds before sending the next update
-        time.sleep(2)
+        # Wait for 1 second before sending the next update
+        time.sleep(1)
