@@ -78,7 +78,7 @@ The electronics are connected to the Raspberry Pi board using the GPIO pins and 
   <em>Connections schematics of a single unit, powering the Raspberry Pi Zero 2W using the GPIO pins. Red pins provide 5V but can also be used as a power input, orange pins provide 3.3V and black pins ground. A 4.7kΩ pull-up resistor is used for the temperature sensor and a 120Ω resistor for the IR LED diode.</em>
 </p>
 
-Additionally, the parent unit included a PiJuice HAT, where all these electronics where connected to using their pins.
+Additionally, the parent unit included a PiJuice HAT, where all these electronics where connected to using its pins.
 
 ### Centralized multiple-unit system with a Relay board
 In order to control the multiple child units, the parent unit controlled each of the relay channels from a unique GPIO pin. Hence, using jumping wires we connected the relay board to the parent unit, also being powered by the relay board input itself.
@@ -121,20 +121,20 @@ Many scripts are run using *cron*. We provide all the *cron* jobs in [crontab.tx
 
 - The [config.py](Scripts/config.py) script contains all the user information that will be needed to automatically personalize the system, such as timezone where the system is installed, email address and passwords, the web-server domain created with Ngrok in case a real-time monitoring system is needed.
 
-#### PiJuice control
+#### Parent unit control using the PiJuice HAT
 These scripts are used to automatically configure the PiJuice board from the parent unit. Hence, they should only be run by the parent unit.
 - [wakeup_enable.py](Scripts/wakeup_enable.py): According to the PiJuice documentation, this scripts must be run at start-up in order to automatically enable the wake-up alarm after every power on.
 - [PiJuice_battery_level.py](Scripts/PiJuice_battery_level.py): This script logs the PiJuice battery level. It can be run using *cron* at a specified time interval (e.g., every 5 minutes). It's useful to get log of system failures due to battery issues. 
 - [wakeup_scheduler.py](Scripts/wakeup_scheduler.py): This script sets the PiJuice wake-up alarm to the specified time according to sunrise next day.
 
-#### Relay control
+#### Child units control using the relay board
 These scripts are used to control the relay board using the GPIO pins of the parent Raspberry Pi. Hence, only the parent should run them. 
 - [GPIOON.py](Scripts/GPIOON.py): This script activates the relay channels through the GPIO pins of the parent Raspberry Pi. It is run at parent boot, so it automatically powers on the child unit after its wake-up alarm. Make sure to change the GPIO-pin list used in your system!
 - [GPIOOFF.py](Scripts/GPIOOFF.py): This script deactivates the relay channels cutting the GPIO pins of the parent Raspberry Pi. Make sure to change the GPIO-pin list used in your system here too!
 - [GPIOOFF_scheduler.py](Scripts/GPIOOFF_scheduler.py): This script creates/modifies the schedule where the *GPIOOFF.py* script is run based in sunset time, to cut current to the child units at specified time after sunset. It is set to run after the child units are already safely shutdown. This script is run at boot using *cron*.
 - [shutdown_scheduler](Scripts/shutdown_scheduler.py): This script schedules a safe shutdown to the Raspberry Pi before being cut from the current. The parent unit is set to shut down briefly after the child units, giving them enough time to correctly power off before cutting the current from the relay channels and shut down itself.
 
-#### Data collection
+#### Automated data collection, conversion and transfer
 All units should include the following scripts:
 - [record_scheduler.py](Scripts/record_scheduler.py): This scripts schedules the camera recording based on sunlight, using multiple light-dependent recording configurations. In our application, monitoring birds in nest boxes from dawn to dusk, light conditions were very low during early morning and late evening. Hence, multiple recording configuration files were used for different times. In the morning and evening, camera was set to manual mode, setting customized exposure and ISO. During day hours, camera was set to auto mode to account for changes in light conditions due to cloud cover variation. Each type of recording used a different *pirecorder* configuration file (recording configuration files are provided in the section [Pirecorder](Pirecorder)).
 - [list_jpg.py](Scripts/list_jpg.py): This script loops through image sequence directories and list filenames in a *.txt* file. As image filenames include the date, time and hostname, this list will be used to link each frame to the corresponding timestamp of recording.
@@ -142,7 +142,7 @@ All units should include the following scripts:
 - [backup_vid.py](Scripts/backup_vid.py): This script copies files in the Raspberry Pi (e.g., converted videos) to a specified target directory. We mounted a cloud storage service using *RClone* (e.g., Google Drive) and copied the collected data to it in a daily basis using *cron*. 
 - [tempsensor.py](Scripts/tempsensor.py): This script reads the temperature from the temperature sensor and stores the result in a *.log* file. It can be run with *cron* at specific intervals.
 
-#### System performance monitoring
+#### Real-time system performance monitoring
 - [flaskapi.py](Scripts/flaskapi.py): This script creates a local server using the html template [index.html](templates/index.html). The templates folder must be placed in the same directory as the *flaskapi.py* script. It should only be run by the parent unit, which will be the one centralizing the system performance monitoring. 
 - [run_ngrok.py](Scripts/run_ngrok.py): This script is used to publish the local web server created with *flask* to the internet using *Ngrok*. It should only be run by the parent unit. 
 - [send_status_request.py](Scripts/send_status_request.py): This script sends a request to the *flask* server, requesting to upload data to the server. It's run by all the units, including the parent, and it's set to reload every 30 seconds. It's run at boot using *cron*, and it keeps running continuously after that.

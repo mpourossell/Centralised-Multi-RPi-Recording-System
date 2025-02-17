@@ -100,8 +100,8 @@ def send_info():
         print(f"Error sending data to {config.parent_hostname}: {e}")
 
 if __name__ == "__main__":
-    for _ in range(29):
+    while True:
         send_info()
 
-        # Wait for 1 second before sending the next update
-        time.sleep(1)
+        # Wait for 5 second before sending the next update
+        time.sleep(5)

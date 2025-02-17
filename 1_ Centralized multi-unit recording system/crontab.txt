@@ -1,14 +1,14 @@
 #### Functions for only the parent RPi:
 
-@reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_enable.py
+@reboot /usr/bin/python3 /home/pi/Scripts/wakeup_enable.py
 
-@reboot /usr/bin/python3 /home/pi/Scripts/PiJuice/wakeup_scheduler.py # wakeup_scheduler
+@reboot /usr/bin/python3 /home/pi/Scripts/wakeup_scheduler.py # wakeup_scheduler
 
 @reboot /usr/bin/python3 /home/pi/Scripts/GPIOOFF_scheduler.py # GPIOOFF_scheduler
 
-@reboot /usr/bin/python3 /home/pi/Scripts/webserver/flaskapi.py # local_server
+@reboot /usr/bin/python3 /home/pi/Scripts/flaskapi.py # local_server
 
-@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/run_ngrok.py >> run_ngrok.log 2>&1 # ngrok_server
+@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/run_ngrok.py >> run_ngrok.log 2>&1 # ngrok_server
 
 @reboot /usr/bin/python3 /home/pi/Scripts/GPIOON.py # GPIOON
 
@@ -20,11 +20,13 @@
 #### Functions for all units:
 ## Functions to run at boot
 
-@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/webserver/send_status_request.py # send_status_request
+@reboot sleep 30 && /usr/bin/python3 /home/pi/Scripts/send_status_request.py # send_status_request
 
-@reboot /usr/bin/python3 /home/pi/Scripts/record_update.py # record_update
+@reboot /usr/bin/python3 /home/pi/Scripts/record_scheduler.py # record_scheduler
 
 @reboot /usr/bin/python3 /home/pi/Scripts/shutdown_scheduler.py # shutdown_scheduler
+
+@reboot /usr/bin/python3 /home/pi/Scripts/list_jpg.py # list_jpg
 
 
 ## Functions that are updated in an automated way using the scripts from above

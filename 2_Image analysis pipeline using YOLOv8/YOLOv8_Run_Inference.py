@@ -141,11 +141,14 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
         video_path = os.path.join(input_video_folder, video_name)
         timestamp_path = os.path.join(timestamp_folder, f"{os.path.splitext(video_name)[0]}.txt")
         output_csv_path = os.path.join(output_csv_folder, f"{os.path.splitext(video_name)[0]}_detections.csv")
-        output_video_path = os.path.join(output_video_folder, f"{os.path.splitext(video_name)[0]}_infered.mp4")
-        if os.path.exists(output_csv_path):
-            if not os.path.exists(output_video_path):
-                annotate_video_from_csv(output_csv_path, video_path, output_video_path, fps=1)
-                continue
+        if save_video == True:
+            output_video_path = os.path.join(output_video_folder, f"{os.path.splitext(video_name)[0]}_infered.mp4")
+            if os.path.exists(output_csv_path):
+                if not os.path.exists(output_video_path):
+                    annotate_video_from_csv(output_csv_path, video_path, output_video_path, fps=1)
+                    continue
+                else:
+                    continue
             else:
                 continue
 

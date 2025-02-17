@@ -26,6 +26,8 @@ Open-source design and code, complemented by computer vision and deep learning g
 
 <p align="left">
   <img src="images/jackdaw_pose_detection.png" alt="Pose estimation in multiple individuals using YOLOv8" width="603" />
+
+  <em>Custom computer vision model specifically trained to detect the jackdaws appearing in the collected images together with its posture. </em>
 </p>
 
 Our system enables continuous, non-intrusive monitoring of organisms and environments in the field in unprecedented detail. Its low-cost, open-source design, and high adaptability make it a versatile solution to a wide range of ecological problems, from long-term forest canopy dynamics to detailed animal behaviour monitoring. Detailed guidelines are provided for building, adjusting, and programming the system, and data processing, facilitating its use by non-experts.

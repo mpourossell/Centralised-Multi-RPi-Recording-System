@@ -13,7 +13,7 @@ os.makedirs(output_path, exist_ok=True)
 for root, dirs, files in os.walk(directory_path):
     for directory in dirs:
         current_dir = os.path.join(root, directory)
-        file_list = os.listdir(current_dir)
+        file_list = sorted(os.listdir(current_dir))
         txt_path = os.path.join(output_path, f'{directory}.txt')
         
         # Check if the text file already exists
