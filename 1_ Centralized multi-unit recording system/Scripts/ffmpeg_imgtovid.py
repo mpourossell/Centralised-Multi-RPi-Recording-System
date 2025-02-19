@@ -47,7 +47,7 @@ def imgtovid(main_dir, out_dir):
                     try:
                         video = (ffmpeg
                                 .input(os.path.abspath(directories + '/*.jpg'), pattern_type='glob', framerate=1)
-                                .output(outvid, vcodec='libx264', pix_fmt='yuv420p')
+                                .output(outvid, vcodec='libx264', pix_fmt='yuv420p', preset='ultrafast', threads=1)
                                 .run()
                                 )
                         logger.DEBUG("SUCCESS: Video " + sub_dir + ".avi" + " succesfully converted")
@@ -57,7 +57,7 @@ def imgtovid(main_dir, out_dir):
                     try:
                         video = (ffmpeg
                                 .input(os.path.abspath(directories + '/*.jpg'), pattern_type='glob', framerate=120)
-                                .output(outvid, vcodec='libx264', pix_fmt='yuv420p')
+                                .output(outvid, vcodec='libx264', pix_fmt='yuv420p', preset='ultrafast', threads=1)
                                 .run()
                                 )
                         logger.DEBUG("SUCCESS: Video " + sub_dir + ".avi" + " succesfully converted")
@@ -77,7 +77,7 @@ def imgtovid(main_dir, out_dir):
             if vidframes < (dirframes - 60):
                 video = (ffmpeg
                          .input(os.path.abspath(directories + '/*.jpg'), pattern_type='glob', framerate=120)
-                         .output(outvid, vcodec='libx264', pix_fmt='yuv420p')
+                         .output(outvid, vcodec='libx264', pix_fmt='yuv420p', preset='ultrafast', threads=1)
                          .run(overwrite_output=True)
                          )
                 logger.DEBUG("RECONVERSION: Video " + sub_dir + ".avi" + " succesfully reconverted")
