@@ -24,6 +24,8 @@
 
 @reboot /usr/bin/python3 /home/pi/Scripts/record_scheduler.py # record_scheduler
 
+# @reboot /usr/bin/python3 /home/pi/Scripts/record_scheduler_single.py # record_scheduler_single
+
 @reboot /usr/bin/python3 /home/pi/Scripts/shutdown_scheduler.py # shutdown_scheduler
 
 @reboot /usr/bin/python3 /home/pi/Scripts/list_jpg.py # list_jpg
@@ -36,6 +38,8 @@
 * * * * * /usr/bin/python3 -c 'import pirecorder; R=pirecorder.PiRecorder("day.conf"); R.record()' >> /home/pi/pirecorder/logs/$(date +\%y\%m\%d)_day.log 2>&1 # REC_day
 
 * * * * * /usr/bin/python3 -c 'import pirecorder; R=pirecorder.PiRecorder("evening.conf"); R.record()' >> /home/pi/pirecorder/logs/$(date +\%y\%m\%d)_evening.log 2>&1 # REC_evening
+
+# * * * * * /usr/bin/python3 -c 'import pirecorder; R=pirecorder.PiRecorder("single.conf"); R.record()' >> /home/pi/pirecorder/logs/$(date +\%y\%m\%d)_single.log 2>&1 # REC_single 
 
 * * * * * sleep 360 && sudo shutdown -h now # Shutdown
 
