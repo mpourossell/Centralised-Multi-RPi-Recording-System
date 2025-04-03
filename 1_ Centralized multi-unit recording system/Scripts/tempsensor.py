@@ -30,6 +30,10 @@ def get_sensor_id():
     # Get the first device as the sensor ID
     sensor_id = devices[0]
 
+    # Or the second in case it does not start with a digit
+    if not sensor_id[0].isdigit():
+        sensor_id = devices[1]
+
     return sensor_id
 
 def get_temp_sens(sensor_id):

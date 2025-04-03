@@ -121,6 +121,11 @@ Many scripts are run using *cron*. We provide all the *cron* jobs in [crontab.tx
 
 - The [config.py](Scripts/config.py) script contains all the user information that will be needed to automatically personalize the system, such as timezone where the system is installed, email address and passwords, the web-server domain created with Ngrok in case a real-time monitoring system is needed.
 
+<p align="left">
+  <img src="../images/RPi_activity_pipeline.png" alt="Pipeline of the daily system activity" width="1000" />
+
+  <em>Pipeline of the system tasks across the day, using the scripts described below.</em>
+</p>
 #### Parent unit control using the PiJuice HAT
 These scripts are used to automatically configure the PiJuice board from the parent unit. Hence, they should only be run by the parent unit.
 - [wakeup_enable.py](Scripts/wakeup_enable.py): According to the PiJuice documentation, this scripts must be run at start-up in order to automatically enable the wake-up alarm after every power on.

@@ -204,7 +204,7 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
             # _______________________
 
             # Run inference
-            results = model.track(frame, conf=0.5, show=False, tracker="botsort.yaml", )
+            results = model.track(frame, conf=0.5, show=False, tracker="botsort.yaml", ) # Botsort is the ultralytics default tracker
             for result in results:
                 # Define result types
                 boxes = result.boxes.cpu().numpy()

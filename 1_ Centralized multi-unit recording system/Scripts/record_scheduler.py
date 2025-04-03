@@ -76,9 +76,9 @@ def update_pirecorder(time_now, sunrise, sunset, extra_min, evening_delay, sunny
     # Edit evening recording in case RPi woke up in mid evening:
     if sunset < (time_now):
         evening_from = time_now + timedelta(
-            minutes=1)  # Set to current time, give 1 minures or margin to start the recording
+            minutes=1)  # Set to current time, give 1 minures of margin to start the recording
     else:
-        evening_from = day_to + timedelta(minutes=2)  # give 2 minutes between recordings
+        evening_from = day_to + timedelta(minutes=1)  # give 1 minutes between recordings
 
     evening_to = sunset + timedelta(hours=config.extra_hours)
 
