@@ -1,7 +1,7 @@
 # This script runs inference in all videos from specified directory
 # It takes the list of timestamps to relate each frame with the recording timestamp.
 # It extracts information from detection and the frame itself and creates a CSV file (save_csv=True)
-# It can also export infered videos using the argument save_video=True
+# It can also export inferred videos using the argument save_video=True
 
 import cv2
 import torch
@@ -14,6 +14,7 @@ from ultralytics import YOLO
 import glob
 import ffmpeg
 import shutil
+import subprocess
 
 
 def jpgtovid(output_video_path, in_dir, fps):
@@ -38,6 +39,25 @@ def ffmpeg_imgtovid(temp_frame_folder, output_video_path, fps):
              .output(output_video_path, vcodec='libx264', pix_fmt='yuv420p')
              .run()
              )
+
+
+def compress_video_ffmpeg(input_path, scale="640:480", fps=1, crf=28, preset="veryslow"):
+    temp_output = input_path + ".tmp.mp4"
+
+    command = [
+        "ffmpeg", "-y", "-i", input_path,
+        "-vf", f"scale={scale},fps={fps}",
+        "-c:v", "libx264",
+        "-crf", str(crf),
+        "-preset", preset,
+        "-pix_fmt", "yuv420p",
+        temp_output
+    ]
+
+    subprocess.run(command, check=True)
+
+    # Replace original file with compressed one
+    os.replace(temp_output, input_path)
 
 
 def annotate_video_from_csv(csv_path, input_video_path, output_video_path, fps):
@@ -117,8 +137,10 @@ def annotate_video_from_csv(csv_path, input_video_path, output_video_path, fps):
     cap.release()
     out.release()
 
+    compress_video_ffmpeg(output_video_path)
 
-def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, output_directory, save_video=False, save_csv=True):
+
+def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, output_directory, imshow=False, save_video=False, save_csv=True):
     output_csv_folder = os.path.join(output_directory, "inference_csv")
     if save_csv == True:
         if not os.path.exists(output_csv_folder):
@@ -146,11 +168,6 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
             if os.path.exists(output_csv_path):
                 if not os.path.exists(output_video_path):
                     annotate_video_from_csv(output_csv_path, video_path, output_video_path, fps=1)
-                    continue
-                else:
-                    continue
-            else:
-                continue
 
         # Read timestamps
         with open(timestamp_path, 'r') as f:
@@ -162,9 +179,9 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
         frame_width, frame_height = int(cap.get(3)), int(cap.get(4))
         #print(f'frame w h = {frame_width}, {frame_height}')
         fps = cap.get(cv2.CAP_PROP_FPS)
-        #print(f'FPS = {fps}')
+        print(f'FPS = {fps}')
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        #print(f'Total frames = {total_frames}')
+        print(f'Total frames = {total_frames}')
 
         if save_csv == True:
             # Prepare dataframe for CSV output
@@ -204,7 +221,7 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
             # _______________________
 
             # Run inference
-            results = model.track(frame, conf=0.5, show=False, tracker="botsort.yaml", ) # Botsort is the ultralytics default tracker
+            results = model.track(frame, conf=0.5, show=False, tracker="botsort.yaml", )
             for result in results:
                 # Define result types
                 boxes = result.boxes.cpu().numpy()
@@ -212,7 +229,7 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
                 # Track number of detections in this frame
                 num_detections = len(boxes) if boxes is not None else 0
 
-                info_text = (f"Frame: {frame_num} | Timestamp: {timestamp} | Mean Color: {mean_color}")
+                info_text = f"Frame: {frame_num} | Timestamp: {timestamp} | Mean Color: {mean_color}"
                 cv2.putText(frame, info_text, (10, 450), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
                 # If there are detections, process each detection individually
@@ -323,11 +340,11 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
                             ** {f"keypoint_{i}_conf": np.nan for i in range(4)}
 
                         })
-                cv2.imshow("Frame", frame)
-
-                # Wait for a key press; you can specify a delay in milliseconds (0 for indefinite wait)
-                if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to exit
-                    break
+                if imshow == True:
+                    cv2.imshow("Frame", frame)
+                    # Wait for a key press; you can specify a delay in milliseconds (0 for indefinite wait)
+                    if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to exit
+                        break
 
             frame_num += 1
 
@@ -346,10 +363,6 @@ def run_yolo_inference(weights_path, input_video_folder, timestamp_folder, outpu
             print(f"Saving complete: {output_video_path}")
 
     print("Inference and saving complete.")
-
-
-
-# Example usage
 
 
 if __name__ == "__main__":

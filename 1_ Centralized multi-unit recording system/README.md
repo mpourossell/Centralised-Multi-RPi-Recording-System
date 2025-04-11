@@ -126,6 +126,7 @@ Many scripts are run using *cron*. We provide all the *cron* jobs in [crontab.tx
 
   <em>Pipeline of the system tasks across the day, using the scripts described below.</em>
 </p>
+
 #### Parent unit control using the PiJuice HAT
 These scripts are used to automatically configure the PiJuice board from the parent unit. Hence, they should only be run by the parent unit.
 - [wakeup_enable.py](Scripts/wakeup_enable.py): According to the PiJuice documentation, this scripts must be run at start-up in order to automatically enable the wake-up alarm after every power on.
