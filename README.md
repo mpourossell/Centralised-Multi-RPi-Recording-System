@@ -1,4 +1,7 @@
 # A centralized multi-unit recording system for automated, off-grid environmental monitoring and animal surveillance
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16354887.svg)](https://doi.org/10.5281/zenodo.16354887)
+
 Ecological and behavioural field research on natural populations often relies on continuous, simultaneous monitoring of many samples or individuals over extended periods of time. However, efficiently collecting, storing and extracting large amounts of data in a non-invasive way poses significant logistical challenges, especially in remote, hard-to-access areas. Furthermore, it is often difficult to properly synchronise and coordinate the monitoring of multiple monitoring locations.
 
 Here, we present a flexible, multi-unit video monitoring system based on Raspberry Pi microcomputers to overcome these challenges. Our system uniquely uses central control for both autonomous data collection, synchronization, and storage across multiple child units and their optimal use of power. It relies on solar energy and battery power to operate in off-grid environments and supports remote connectivity and automated data transfer. Accommodating a wide range of sensors and configurations, it offers an adaptable, scalable solution for diverse research needs. 
@@ -32,7 +35,7 @@ Open-source design and code, complemented by computer vision and deep learning g
 
 Our system enables continuous, non-intrusive monitoring of organisms and environments in the field in unprecedented detail. Its low-cost, open-source design, and high adaptability make it a versatile solution to a wide range of ecological problems, from long-term forest canopy dynamics to detailed animal behaviour monitoring. Detailed guidelines are provided for building, adjusting, and programming the system, and data processing, facilitating its use by non-experts.
 
-This GitHub page accompanies the research paper Pou-Rossell et al. (2025) "**A centralized multi-unit recording system for automated, off-grid animal observation and environmental monitoring**", currently accepted and publication will soon be available.
+This GitHub page accompanies the research paper Pou-Rossell et al. (2025) "A centralized multi-unit recording system for automated, off-grid animal observation and environmental monitoring", in _Methods in Ecology and Evolution_.
 
 ## Project structure
 
