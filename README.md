@@ -35,7 +35,7 @@ Open-source design and code, complemented by computer vision and deep learning g
 
 Our system enables continuous, non-intrusive monitoring of organisms and environments in the field in unprecedented detail. Its low-cost, open-source design, and high adaptability make it a versatile solution to a wide range of ecological problems, from long-term forest canopy dynamics to detailed animal behaviour monitoring. Detailed guidelines are provided for building, adjusting, and programming the system, and data processing, facilitating its use by non-experts.
 
-This GitHub page accompanies the research paper Pou-Rossell et al. (2025) "A centralized multi-unit recording system for automated, off-grid animal observation and environmental monitoring", in _Methods in Ecology and Evolution_.
+This GitHub repository accompanies the research paper [Pou-Rossell et al. (2025) "A centralized multi-unit recording system for automated, off-grid animal observation and environmental monitoring"](https://doi.org/10.1111/2041-210x.70129) in _Methods in Ecology and Evolution_.
 
 ## Project structure
 
